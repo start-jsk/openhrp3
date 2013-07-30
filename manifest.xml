@@ -7,7 +7,7 @@
    bts : https://openrtp.jp/redmine/
 
   </description>
-  <author>Developed by AIST, GRX, ROS Package is maintained by Kei Okada</author>
+  <author>Developed by AIST, ROS Package is maintained by Kei Okada</author>
 
   <license>EPL</license>
 
@@ -20,7 +20,6 @@
 
   <!-- openhrp3 -->
   <depend package="openrtm_aist" />
-  <depend package="openrtm_ros_bridge" />
 
   <rosdep name="eigen" />
   <rosdep name="atlas" />
