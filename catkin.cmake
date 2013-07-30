@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(openhrp3)
 # Load catkin and all dependencies required for this package
 # TODO: remove all from COMPONENTS that are not catkin packages.
-find_package(catkin REQUIRED COMPONENTS)
+find_package(catkin REQUIRED COMPONENTS openrtm_aist)
 
 # include_directories(include ${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS})
 # CATKIN_MIGRATION: removed during catkin migration
@@ -38,9 +38,9 @@ endif(_make_failed)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-    DEPENDS openrtm_aist eigen atlas boost collada-dom
-    CATKIN-DEPENDS # TODO
-    INCLUDE_DIRS # TODO include
+    DEPENDS eigen atlas boost collada-dom
+    CATKIN-DEPENDS openrtm_aist
+    INCLUDE_DIRS include
     LIBRARIES # TODO
 )
 
