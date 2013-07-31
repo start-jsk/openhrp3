@@ -20,6 +20,7 @@
 
   <!-- openhrp3 -->
   <depend package="openrtm_aist" />
+  <depend package="openrtm_aist_python" />
 
   <rosdep name="eigen" />
   <rosdep name="atlas" />
