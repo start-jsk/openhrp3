@@ -38,7 +38,7 @@ endif(_make_failed)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-    DEPENDS eigen atlas boost collada-dom
+    DEPENDS eigen atlas f2c boost collada-dom
     CATKIN-DEPENDS openrtm_aist
     INCLUDE_DIRS include
     LIBRARIES # TODO

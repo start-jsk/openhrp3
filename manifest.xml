@@ -24,6 +24,7 @@
 
   <rosdep name="eigen" />
   <rosdep name="atlas" />
+  <rosdep name="f2c" />
   <rosdep name="boost" />
 
   <!-- collada -->
