@@ -1,9 +1,19 @@
 # http://ros.org/doc/groovy/api/catkin/html/user_guide/supposed.html
 cmake_minimum_required(VERSION 2.8.3)
 project(openhrp3)
+
+# Build OpenHRP3
+execute_process(COMMAND cmake -E chdir ${PROJECT_SOURCE_DIR} make -f Makefile.openhrp3 installed
+                COMMAND cmake -E copy_directory ${PROJECT_SOURCE_DIR}/lib ../devel/lib # force copy under devel for catkin_package
+                COMMAND cmake -E remove ../devel/lib/pkgconfig/openhrp3.1.pc # remove
+                RESULT_VARIABLE _make_failed)
+if (_make_failed)
+  message(FATAL_ERROR "Build of OpenHRP3 failed")
+endif(_make_failed)
+
 # Load catkin and all dependencies required for this package
 # TODO: remove all from COMPONENTS that are not catkin packages.
-find_package(catkin REQUIRED COMPONENTS openrtm_aist openrtm_aist_python)
+find_package(catkin REQUIRED COMPONENTS)
 
 # include_directories(include ${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS})
 # CATKIN_MIGRATION: removed during catkin migration
@@ -24,24 +34,15 @@ find_package(catkin REQUIRED COMPONENTS openrtm_aist openrtm_aist_python)
 # CATKIN_MIGRATION: removed during catkin migration
 # rosbuild_init()
 
-# Build OpenHRP3
-execute_process(COMMAND cmake -E chdir ${PROJECT_SOURCE_DIR} make -f Makefile.openhrp3 installed
-                RESULT_VARIABLE _make_failed)
-if (_make_failed)
-  message(FATAL_ERROR "Build of OpenHRP3 failed")
-endif(_make_failed)
-
-
-
 # TODO: fill in what other packages will need to use this package
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
     DEPENDS eigen atlas f2c boost collada-dom
-    CATKIN-DEPENDS openrtm_aist
-    INCLUDE_DIRS include
-    LIBRARIES # TODO
+    CATKIN-DEPENDS openrtm_aist openrtm_aist_python
+    INCLUDE_DIRS include/OpenHRP-3.1
+    LIBRARIES hrpModel-3.1 hrpCollision-3.1 hrpModel-3.1 hrpUtil-3.1
 )
 
 # bin goes lib/openhrp3 so that it can be invoked from rosrun
@@ -58,3 +59,7 @@ install(DIRECTORY include
 install(DIRECTORY share
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
+
+# install openhrp3.1 (officialy this pacakge is distributed as openhrp3.1, which is invalid for ros packge name)
+execute_process(COMMAND cmake -E create_symlink  openhrp3.pc ../devel/lib/pkgconfig/openhrp3.1.pc)
+
