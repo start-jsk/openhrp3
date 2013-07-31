@@ -44,9 +44,9 @@ catkin_package(
     LIBRARIES # TODO
 )
 
-# bin goes share/openhrp3 so that it can be invoked from rosrun
+# bin goes lib/openhrp3 so that it can be invoked from rosrun
 install(DIRECTORY bin
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}/${PROJECT_NAME}
   USE_SOURCE_PERMISSIONS  # set executable
 )
 install(DIRECTORY lib
