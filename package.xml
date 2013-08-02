@@ -6,13 +6,13 @@
 
   </description>
   <maintainer email="k-okada@jsk.t.u-tokyo.ac.jp">Kei Okada</maintainer>
+  <maintainer email="iisaito@kinugarage.com">Isao Isaac Saito</maintainer>
+  <author>AIST</author>
 
   <license>EPL</license>
 
   <url type="website">https://openrtp.jp/svn/hrg/openhrp/3.1/trunk/</url>
   <url type="bugtracker">https://openrtp.jp/redmine/</url>
-
-  <author>AIST</author>
 
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>openrtm_aist</build_depend>
