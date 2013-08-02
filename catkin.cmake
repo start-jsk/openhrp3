@@ -5,7 +5,6 @@ project(openhrp3)
 # Build OpenHRP3
 execute_process(COMMAND cmake -E chdir ${PROJECT_SOURCE_DIR} make -f Makefile.openhrp3 installed
                 COMMAND cmake -E copy_directory ${PROJECT_SOURCE_DIR}/lib ../devel/lib # force copy under devel for catkin_package
-                COMMAND cmake -E remove ../devel/lib/pkgconfig/openhrp3.1.pc # remove
                 RESULT_VARIABLE _make_failed)
 if (_make_failed)
   message(FATAL_ERROR "Build of OpenHRP3 failed")
@@ -60,6 +59,5 @@ install(DIRECTORY share
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
-# install openhrp3.1 (officialy this pacakge is distributed as openhrp3.1, which is invalid for ros packge name)
-execute_process(COMMAND cmake -E create_symlink  openhrp3.pc ../devel/lib/pkgconfig/openhrp3.1.pc)
+
 
