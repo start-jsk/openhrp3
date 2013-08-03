@@ -4,7 +4,7 @@ project(openhrp3)
 
 # Build OpenHRP3
 execute_process(COMMAND cmake -E chdir ${PROJECT_SOURCE_DIR} make -f Makefile.openhrp3 installed
-                COMMAND cmake -E copy_directory ${PROJECT_SOURCE_DIR}/lib ../devel/lib # force copy under devel for catkin_package
+#                COMMAND cmake -E copy_directory ${PROJECT_SOURCE_DIR}/lib ${CATKIN_DEVEL_PREFIX}/lib # force copy under devel for catkin_package
                 RESULT_VARIABLE _make_failed)
 if (_make_failed)
   message(FATAL_ERROR "Build of OpenHRP3 failed")
@@ -33,6 +33,14 @@ find_package(catkin REQUIRED COMPONENTS openrtm_aist openrtm_aist_python)
 # CATKIN_MIGRATION: removed during catkin migration
 # rosbuild_init()
 
+# fake add_library for catkin_package
+add_library(hrpModel-3.1     SHARED IMPORTED)
+add_library(hrpCollision-3.1 SHARED IMPORTED)
+add_library(hrpUtil-3.1      SHARED IMPORTED)
+set_target_properties(hrpModel-3.1     PROPERTIES IMPORTED_IMPLIB ${PROJECT_SOURCE_DIR}/lib/libhrpModel-3.1.so)
+set_target_properties(hrpCollision-3.1 PROPERTIES IMPORTED_IMPLIB ${PROJECT_SOURCE_DIR}/lib/libhrpCollision-3.1.so)
+set_target_properties(hrpUtil-3.1      PROPERTIES IMPORTED_IMPLIB ${PROJECT_SOURCE_DIR}/lib/libhrpUtil-3.1.so)
+
 # TODO: fill in what other packages will need to use this package
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
@@ -41,7 +49,7 @@ catkin_package(
     DEPENDS eigen atlas f2c boost collada-dom
     CATKIN-DEPENDS openrtm_aist openrtm_aist_python
     INCLUDE_DIRS include/OpenHRP-3.1
-    LIBRARIES hrpModel-3.1 hrpCollision-3.1 hrpModel-3.1 hrpUtil-3.1
+    LIBRARIES hrpModel-3.1 hrpCollision-3.1 hrpUtil-3.1
 )
 
 # bin goes lib/openhrp3 so that it can be invoked from rosrun
