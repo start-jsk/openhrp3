@@ -22,7 +22,7 @@
   <build_depend>eigen</build_depend>
   <build_depend>f2c</build_depend>
   <build_depend>libjpeg</build_depend>
-  <build_depend>zlib</build_depend>
+  <build_depend>libpng12-dev</build_depend>
   <build_depend>openrtm_aist</build_depend>
   <build_depend>openrtm_aist_python</build_depend>
   <build_depend>subversion</build_depend>
@@ -33,7 +33,7 @@
   <run_depend>eigen</run_depend>
   <run_depend>f2c</run_depend>
   <run_depend>libjpeg</run_depend>
-  <run_depend>zlib</run_depend>
+  <run_depend>libpng12-dev</run_depend>
   <run_depend>openrtm_aist</run_depend>
   <run_depend>openrtm_aist_python</run_depend>
   <!-- <test_depend>openrtm_aist</test_depend> -->
