@@ -2,17 +2,17 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(openhrp3)
 
+# Load catkin and all dependencies required for this package
+find_package(catkin REQUIRED COMPONENTS openrtm_aist openrtm_aist_python)
+
 # Build OpenHRP3
+set(ENV{PATH} "$ENV{PATH}:${openrtm_aist_SOURCE_DIR}/bin")
 execute_process(COMMAND cmake -E chdir ${PROJECT_SOURCE_DIR} make -f Makefile.openhrp3 installed
 #                COMMAND cmake -E copy_directory ${PROJECT_SOURCE_DIR}/lib ${CATKIN_DEVEL_PREFIX}/lib # force copy under devel for catkin_package
                 RESULT_VARIABLE _make_failed)
 if (_make_failed)
   message(FATAL_ERROR "Build of OpenHRP3 failed")
 endif(_make_failed)
-
-# Load catkin and all dependencies required for this package
-# TODO: remove all from COMPONENTS that are not catkin packages.
-find_package(catkin REQUIRED COMPONENTS openrtm_aist openrtm_aist_python)
 
 # include_directories(include ${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS})
 # CATKIN_MIGRATION: removed during catkin migration
