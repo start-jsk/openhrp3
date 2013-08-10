@@ -6,8 +6,7 @@ project(openhrp3)
 find_package(catkin REQUIRED COMPONENTS openrtm_aist openrtm_aist_python)
 
 # Build OpenHRP3
-set(ENV{PATH} "$ENV{PATH}:${openrtm_aist_SOURCE_DIR}/bin")
-message("add ${openrtm_aist_SOURCE_DIR}/bin to PATH -> $ENV{PATH}")
+set(ENV{PATH} "$ENV{PATH}:${openrtm_aist_PREFIX}/lib/openrtm_aist/bin")
 execute_process(COMMAND cmake -E chdir ${PROJECT_SOURCE_DIR} make -f Makefile.openhrp3 installed
 #                COMMAND cmake -E copy_directory ${PROJECT_SOURCE_DIR}/lib ${CATKIN_DEVEL_PREFIX}/lib # force copy under devel for catkin_package
                 RESULT_VARIABLE _make_failed)
