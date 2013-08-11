@@ -44,6 +44,7 @@ set_target_properties(hrpUtil-3.1      PROPERTIES IMPORTED_IMPLIB ${PROJECT_SOUR
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
+file(MAKE_DIRECTORY include/OpenHRP-3.1) # fake catkin_package
 catkin_package(
     DEPENDS eigen atlas f2c boost collada-dom
     CATKIN-DEPENDS openrtm_aist openrtm_aist_python
