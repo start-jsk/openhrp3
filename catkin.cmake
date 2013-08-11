@@ -6,13 +6,12 @@ project(openhrp3)
 find_package(catkin REQUIRED COMPONENTS openrtm_aist openrtm_aist_python)
 
 # Build OpenHRP3
-set(ENV{PATH} "$ENV{PATH}:${openrtm_aist_PREFIX}/lib/openrtm_aist/bin")
-execute_process(COMMAND cmake -E chdir ${PROJECT_SOURCE_DIR} make -f Makefile.openhrp3 installed
-#                COMMAND cmake -E copy_directory ${PROJECT_SOURCE_DIR}/lib ${CATKIN_DEVEL_PREFIX}/lib # force copy under devel for catkin_package
-                RESULT_VARIABLE _make_failed)
-if (_make_failed)
-  message(FATAL_ERROR "Build of OpenHRP3 failed")
-endif(_make_failed)
+add_custom_command(
+  OUTPUT ${PROJECT_SOURCE_DIR}/installed
+  COMMAND PATH=${openrtm_aist_PREFIX}/lib/openrtm_aist/bin:$ENV{PATH} cmake -E chdir ${PROJECT_SOURCE_DIR} make -f Makefile.openhrp3 installed
+  DEPENDS ${PROJECT_SOURCE_DIR}/Makefile.openhrp3
+  )
+add_custom_target(compile_openhrp3 ALL DEPENDS ${PROJECT_SOURCE_DIR}/installed)
 
 # include_directories(include ${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS})
 # CATKIN_MIGRATION: removed during catkin migration
