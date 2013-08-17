@@ -33,12 +33,28 @@ add_custom_target(compile_openhrp3 ALL DEPENDS ${PROJECT_SOURCE_DIR}/installed)
 # rosbuild_init()
 
 # fake add_library for catkin_package
-add_library(hrpModel-3.1     SHARED IMPORTED)
-add_library(hrpCollision-3.1 SHARED IMPORTED)
-add_library(hrpUtil-3.1      SHARED IMPORTED)
-set_target_properties(hrpModel-3.1     PROPERTIES IMPORTED_IMPLIB ${PROJECT_SOURCE_DIR}/lib/libhrpModel-3.1.so)
-set_target_properties(hrpCollision-3.1 PROPERTIES IMPORTED_IMPLIB ${PROJECT_SOURCE_DIR}/lib/libhrpCollision-3.1.so)
-set_target_properties(hrpUtil-3.1      PROPERTIES IMPORTED_IMPLIB ${PROJECT_SOURCE_DIR}/lib/libhrpUtil-3.1.so)
+#add_library(hrpModel-3.1     SHARED IMPORTED)
+#add_library(hrpCollision-3.1 SHARED IMPORTED)
+#add_library(hrpUtil-3.1      SHARED IMPORTED)
+#set_target_properties(hrpModel-3.1     PROPERTIES IMPORTED_IMPLIB ${PROJECT_SOURCE_DIR}/lib/libhrpModel-3.1.so)
+#set_target_properties(hrpCollision-3.1 PROPERTIES IMPORTED_IMPLIB ${PROJECT_SOURCE_DIR}/lib/libhrpCollision-3.1.so)
+#set_target_properties(hrpUtil-3.1      PROPERTIES IMPORTED_IMPLIB ${PROJECT_SOURCE_DIR}/lib/libhrpUtil-3.1.so)
+add_library(hrpModel-3.1     SHARED)
+add_library(hrpCollision-3.1 SHARED)
+add_library(hrpUtil-3.1      SHARED)
+set_target_properties(hrpModel-3.1     PROPERTIES LINKER_LANGUAGE C)
+set_target_properties(hrpCollision-3.1 PROPERTIES LINKER_LANGUAGE C)
+set_target_properties(hrpUtil-3.1      PROPERTIES LINKER_LANGUAGE C)
+add_custom_command(OUTPUT lib/libhrpModel-3.1.so
+  COMMAND cmake -E copy ${PROJECT_SOURCE_DIR}/lib/libhrpModel-3.1.so  ${CATKIN_DEVEL_PREFIX}/lib/libhrpModel-3.1.so
+  DEPENDS compile_openhrp3)
+add_custom_command(OUTPUT lib/libhrpCollision-3.1.so
+  COMMAND cmake -E copy ${PROJECT_SOURCE_DIR}/lib/libhrpCollision-3.1.so  ${CATKIN_DEVEL_PREFIX}/lib/libhrpCollision-3.1.so
+  DEPENDS compile_openhrp3)
+add_custom_command(OUTPUT lib/libhrpUtil-3.1.so
+  COMMAND cmake -E copy ${PROJECT_SOURCE_DIR}/lib/libhrpUtil-3.1.so  ${CATKIN_DEVEL_PREFIX}/lib/libhrpUtil-3.1.so
+  DEPENDS compile_openhrp3)
+add_custom_target(copy_openhrp3_libs ALL DEPENDS lib/libhrpModel-3.1.so lib/libhrpCollision-3.1.so lib/libhrpUtil-3.1.so)
 
 # TODO: fill in what other packages will need to use this package
 ## LIBRARIES: libraries you create in this project that dependent projects also need
@@ -67,5 +83,12 @@ install(DIRECTORY share
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
+install(CODE
+  "execute_process(COMMAND echo \"fix openhrp3.1.pc provided by OpenHRP3, openhrp3.pc is provided catkin.pc and do not use this\")
+   #execute_process(COMMAND cmake -E remove -f \${DESTDIR}/${CMAKE_INSTALL_PREFIX}/lib/pkgconfig/openhrp3.pc)
+   #execute_process(COMMAND cmake -E create_symlink openhrp3.1.pc \${DESTDIR}/${CMAKE_INSTALL_PREFIX}/lib/pkgconfig/openhrp3.pc)
+   execute_process(COMMAND sed -i s@${openhrp3_SOURCE_DIR}@${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME}@g \${DESTDIR}/${CMAKE_INSTALL_PREFIX}/lib/pkgconfig/openhrp3.1.pc) # basic
+   execute_process(COMMAND sed -i s@exec_prefix=@exec_prefix=${CMAKE_INSTALL_PREFIX}\\ \\\#@g \${DESTDIR}/${CMAKE_INSTALL_PREFIX}/lib/pkgconfig/openhrp3.1.pc) # for -cflags
+")
 
 
