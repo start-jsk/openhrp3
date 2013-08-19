@@ -85,10 +85,10 @@ install(DIRECTORY share
 
 install(CODE
   "execute_process(COMMAND echo \"fix openhrp3.1.pc provided by OpenHRP3, openhrp3.pc is provided catkin.pc and do not use this\")
-   #execute_process(COMMAND cmake -E remove -f \${DESTDIR}/${CMAKE_INSTALL_PREFIX}/lib/pkgconfig/openhrp3.pc)
-   #execute_process(COMMAND cmake -E create_symlink openhrp3.1.pc \${DESTDIR}/${CMAKE_INSTALL_PREFIX}/lib/pkgconfig/openhrp3.pc)
-   execute_process(COMMAND sed -i s@${openhrp3_SOURCE_DIR}@${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME}@g \${DESTDIR}/${CMAKE_INSTALL_PREFIX}/lib/pkgconfig/openhrp3.1.pc) # basic
-   execute_process(COMMAND sed -i s@exec_prefix=@exec_prefix=${CMAKE_INSTALL_PREFIX}\\ \\\#@g \${DESTDIR}/${CMAKE_INSTALL_PREFIX}/lib/pkgconfig/openhrp3.1.pc) # for -cflags
+   #execute_process(COMMAND cmake -E remove -f \$ENV{DESTDIR}/${CMAKE_INSTALL_PREFIX}/lib/pkgconfig/openhrp3.pc)
+   #execute_process(COMMAND cmake -E create_symlink openhrp3.1.pc \$ENV{DESTDIR}/${CMAKE_INSTALL_PREFIX}/lib/pkgconfig/openhrp3.pc)
+   execute_process(COMMAND sed -i s@${openhrp3_SOURCE_DIR}@${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME}@g \$ENV{DESTDIR}/${CMAKE_INSTALL_PREFIX}/lib/pkgconfig/openhrp3.1.pc) # basic
+   execute_process(COMMAND sed -i s@exec_prefix=@exec_prefix=${CMAKE_INSTALL_PREFIX}\\ \\\#@g \$ENV{DESTDIR}/${CMAKE_INSTALL_PREFIX}/lib/pkgconfig/openhrp3.1.pc) # for -cflags
 ")
 
 
