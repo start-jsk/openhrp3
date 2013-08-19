@@ -16,6 +16,7 @@ include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
 rosbuild_init()
 
 # Build OpenHRP3
+rosbuild_find_ros_package(openrtm_aist)
 set(ENV{PATH} "$ENV{PATH}:${openrtm_aist_PACKAGE_PATH}/bin")
 execute_process(COMMAND cmake -E chdir ${PROJECT_SOURCE_DIR} make -f Makefile.openhrp3 installed
                 RESULT_VARIABLE _make_failed)
