@@ -3,92 +3,65 @@ cmake_minimum_required(VERSION 2.8.3)
 project(openhrp3)
 
 # Load catkin and all dependencies required for this package
-find_package(catkin REQUIRED COMPONENTS openrtm_aist openrtm_aist_python)
+find_package(catkin REQUIRED COMPONENTS openrtm_aist_python)
 
 # Build OpenHRP3
-add_custom_command(
-  OUTPUT ${PROJECT_SOURCE_DIR}/installed
-  COMMAND PATH=${openrtm_aist_PREFIX}/lib/openrtm_aist/bin:$ENV{PATH} cmake -E chdir ${PROJECT_SOURCE_DIR} make -f Makefile.openhrp3 installed
-  DEPENDS ${PROJECT_SOURCE_DIR}/Makefile.openhrp3
-  )
-add_custom_target(compile_openhrp3 ALL DEPENDS ${PROJECT_SOURCE_DIR}/installed)
+set(ENV{PKG_CONFIG_PATH} $ENV{PKG_CONFIG_PATH}:${CATKIN_DEVEL_PREFIX}/lib/pkgconfig) # 1) set pkg-config path
+find_package(PkgConfig)
+pkg_check_modules(openrtm_aist openrtm-aist REQUIRED) # 2) invoke pkg-confg
+set(ENV{PATH} $ENV{PATH}:${openrtm_aist_PREFIX}/lib/openrtm_aist/bin) # 3) get PREFIX and update PATH
+execute_process(
+  COMMAND sh -c "test -e ${CATKIN_DEVEL_PREFIX}/lib/${PROJECT_NAME} || rm -f ${PROJECT_SOURCE_DIR}/installed ${PROJECT_SOURCE_DIR}/build/OpenHRP-3.1/CMakeCache.txt"
+  COMMAND cmake -E chdir ${PROJECT_SOURCE_DIR} make -f Makefile.openhrp3 INSTALL_DIR=${CATKIN_DEVEL_PREFIX} installed
+                RESULT_VARIABLE _make_failed)
+if (_make_failed)
+  message(FATAL_ERROR "Compile openhrp3 failed")
+endif(_make_failed)
+execute_process(
+  COMMAND sh -c "test -e ${CATKIN_DEVEL_PREFIX}/lib/${PROJECT_NAME}/bin || (mkdir -p ${CATKIN_DEVEL_PREFIX}/lib/${PROJECT_NAME}; mv ${CATKIN_DEVEL_PREFIX}/bin/* ${CATKIN_DEVEL_PREFIX}/lib/${PROJECT_NAME}/)"
+  OUTPUT_VARIABLE _copy_bin)
+message("${_copy_bin}")
 
-# include_directories(include ${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS})
-# CATKIN_MIGRATION: removed during catkin migration
-# cmake_minimum_required(VERSION 2.4.6)
-
-# CATKIN_MIGRATION: removed during catkin migration
-# include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
-
-# Set the build type.  Options are:
-#  Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
-#  Debug          : w/ debug symbols, w/o optimization
-#  Release        : w/o debug symbols, w/ optimization
-#  RelWithDebInfo : w/ debug symbols, w/ optimization
-#  MinSizeRel     : w/o debug symbols, w/ optimization, stripped binaries
-#set(ROS_BUILD_TYPE RelWithDebInfo)
-
-
-# CATKIN_MIGRATION: removed during catkin migration
-# rosbuild_init()
 
 # fake add_library for catkin_package
-#add_library(hrpModel-3.1     SHARED IMPORTED)
-#add_library(hrpCollision-3.1 SHARED IMPORTED)
-#add_library(hrpUtil-3.1      SHARED IMPORTED)
-#set_target_properties(hrpModel-3.1     PROPERTIES IMPORTED_IMPLIB ${PROJECT_SOURCE_DIR}/lib/libhrpModel-3.1.so)
-#set_target_properties(hrpCollision-3.1 PROPERTIES IMPORTED_IMPLIB ${PROJECT_SOURCE_DIR}/lib/libhrpCollision-3.1.so)
-#set_target_properties(hrpUtil-3.1      PROPERTIES IMPORTED_IMPLIB ${PROJECT_SOURCE_DIR}/lib/libhrpUtil-3.1.so)
-add_library(hrpModel-3.1     SHARED)
-add_library(hrpCollision-3.1 SHARED)
-add_library(hrpUtil-3.1      SHARED)
-set_target_properties(hrpModel-3.1     PROPERTIES LINKER_LANGUAGE C)
-set_target_properties(hrpCollision-3.1 PROPERTIES LINKER_LANGUAGE C)
-set_target_properties(hrpUtil-3.1      PROPERTIES LINKER_LANGUAGE C)
-add_custom_command(OUTPUT lib/libhrpModel-3.1.so
-  COMMAND cmake -E copy ${PROJECT_SOURCE_DIR}/lib/libhrpModel-3.1.so  ${CATKIN_DEVEL_PREFIX}/lib/libhrpModel-3.1.so
-  DEPENDS compile_openhrp3)
-add_custom_command(OUTPUT lib/libhrpCollision-3.1.so
-  COMMAND cmake -E copy ${PROJECT_SOURCE_DIR}/lib/libhrpCollision-3.1.so  ${CATKIN_DEVEL_PREFIX}/lib/libhrpCollision-3.1.so
-  DEPENDS compile_openhrp3)
-add_custom_command(OUTPUT lib/libhrpUtil-3.1.so
-  COMMAND cmake -E copy ${PROJECT_SOURCE_DIR}/lib/libhrpUtil-3.1.so  ${CATKIN_DEVEL_PREFIX}/lib/libhrpUtil-3.1.so
-  DEPENDS compile_openhrp3)
-add_custom_target(copy_openhrp3_libs ALL DEPENDS lib/libhrpModel-3.1.so lib/libhrpCollision-3.1.so lib/libhrpUtil-3.1.so)
+add_library(hrpModel-3.1     SHARED IMPORTED)
+add_library(hrpCollision-3.1 SHARED IMPORTED)
+add_library(hrpUtil-3.1      SHARED IMPORTED)
+set_target_properties(hrpModel-3.1     PROPERTIES IMPORTED_IMPLIB ${CATKIN_DEVEL_PREFIX}/lib/libhrpModel-3.1.so)
+set_target_properties(hrpCollision-3.1 PROPERTIES IMPORTED_IMPLIB ${CATKIN_DEVEL_PREFIX}/lib/libhrpCollision-3.1.so)
+set_target_properties(hrpUtil-3.1      PROPERTIES IMPORTED_IMPLIB ${CATKIN_DEVEL_PREFIX}/lib/libhrpUtil-3.1.so)
 
-# TODO: fill in what other packages will need to use this package
-## LIBRARIES: libraries you create in this project that dependent projects also need
-## CATKIN_DEPENDS: catkin_packages dependent projects also need
-## DEPENDS: system dependencies of this project that dependent projects also need
-file(MAKE_DIRECTORY include/OpenHRP-3.1) # fake catkin_package
+file(MAKE_DIRECTORY ${CATKIN_DEVEL_PREFIX}/include/OpenHRP-3.1) # fake catkin_package
 catkin_package(
-    DEPENDS eigen atlas f2c boost collada-dom
-    CATKIN-DEPENDS openrtm_aist openrtm_aist_python
-    INCLUDE_DIRS include/OpenHRP-3.1
+    DEPENDS eigen atlas f2c boost collada-dom openrtm-aist
+    CATKIN-DEPENDS openrtm_aist_python
+    INCLUDE_DIRS ${CATKIN_DEVEL_PREFIX}/include/OpenHRP-3.1
     LIBRARIES hrpModel-3.1 hrpCollision-3.1 hrpUtil-3.1
+    SKIP_CMAKE_CONFIG_GENERATION
+    SKIP_PKG_CONFIG_GENERATION
 )
 
 # bin goes lib/openhrp3 so that it can be invoked from rosrun
-install(DIRECTORY bin
-  DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}/${PROJECT_NAME}
+install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/bin
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
   USE_SOURCE_PERMISSIONS  # set executable
 )
-install(DIRECTORY lib/
+install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/lib/
   DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 )
-install(DIRECTORY include
+install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/include
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
 )
-install(DIRECTORY share
+install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/share
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
 install(CODE
-  "execute_process(COMMAND echo \"fix openhrp3.1.pc provided by OpenHRP3, openhrp3.pc is provided catkin.pc and do not use this\")
-   #execute_process(COMMAND cmake -E remove -f \$ENV{DESTDIR}/${CMAKE_INSTALL_PREFIX}/lib/pkgconfig/openhrp3.pc)
-   #execute_process(COMMAND cmake -E create_symlink openhrp3.1.pc \$ENV{DESTDIR}/${CMAKE_INSTALL_PREFIX}/lib/pkgconfig/openhrp3.pc)
-   execute_process(COMMAND sed -i s@${openhrp3_SOURCE_DIR}@${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME}@g \$ENV{DESTDIR}/${CMAKE_INSTALL_PREFIX}/lib/pkgconfig/openhrp3.1.pc) # basic
-   execute_process(COMMAND sed -i s@exec_prefix=@exec_prefix=${CMAKE_INSTALL_PREFIX}\\ \\\#@g \$ENV{DESTDIR}/${CMAKE_INSTALL_PREFIX}/lib/pkgconfig/openhrp3.1.pc) # for -cflags
+  "execute_process(COMMAND echo \"fix openhrp3.1.pc\")
+   execute_process(COMMAND sed -i s@${CATKIN_DEVEL_PREFIX}@${CMAKE_INSTALL_PREFIX}@g \$ENV{DESTDIR}/${CMAKE_PACKAGE_LIB_REFIX}b/pkgconfig/openhrp3.1.pc) # basic
+   #execute_process(COMMAND sed -i s@exec_prefix=@exec_prefix=${CMAKE_INSTALL_PREFIX}\\ \\\#@g \$ENV{DESTDIR}/${CMAKE_INSTALL_PREFIX}/lib/pkgconfig/openhrp3.1.pc) # for --libs
+   #execute_process(COMMAND sed -i s@^prefix=${CATKIN_DEVEL_PREFIX}@prefix=${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME}@g \$ENV{DESTDIR}/${CMAKE_PACKAGE_LIB_PREFIX}/pkgconfig/openhrp3.1.pc) # basic
+   execute_process(COMMAND sed -i s@{prefix}/include@{prefix}/include/openhrp3/include@g \$ENV{DESTDIR}/${CMAKE_PACKAGE_LIB_PREFIX}/pkgconfig/openhrp3.1.pc) # --cflags
 ")
 
 
