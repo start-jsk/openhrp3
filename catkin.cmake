@@ -41,13 +41,9 @@ catkin_package(
     SKIP_PKG_CONFIG_GENERATION
 )
 
-# bin goes lib/openhrp3 so that it can be invoked from rosrun
-install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/bin
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-  USE_SOURCE_PERMISSIONS  # set executable
-)
 install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/lib/
   DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  USE_SOURCE_PERMISSIONS  # set executable
 )
 install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/include
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
@@ -58,10 +54,10 @@ install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/share
 
 install(CODE
   "execute_process(COMMAND echo \"fix openhrp3.1.pc\")
-   execute_process(COMMAND sed -i s@${CATKIN_DEVEL_PREFIX}@${CMAKE_INSTALL_PREFIX}@g \$ENV{DESTDIR}/${CMAKE_PACKAGE_LIB_REFIX}b/pkgconfig/openhrp3.1.pc) # basic
+   execute_process(COMMAND sed -i s@${CATKIN_DEVEL_PREFIX}@${CMAKE_INSTALL_PREFIX}@g \$ENV{DESTDIR}/${CATKIN_PACKAGE_LIB_PREFIX}/pkgconfig/openhrp3.1.pc) # basic
    #execute_process(COMMAND sed -i s@exec_prefix=@exec_prefix=${CMAKE_INSTALL_PREFIX}\\ \\\#@g \$ENV{DESTDIR}/${CMAKE_INSTALL_PREFIX}/lib/pkgconfig/openhrp3.1.pc) # for --libs
    #execute_process(COMMAND sed -i s@^prefix=${CATKIN_DEVEL_PREFIX}@prefix=${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME}@g \$ENV{DESTDIR}/${CMAKE_PACKAGE_LIB_PREFIX}/pkgconfig/openhrp3.1.pc) # basic
-   execute_process(COMMAND sed -i s@{prefix}/include@{prefix}/include/openhrp3/include@g \$ENV{DESTDIR}/${CMAKE_PACKAGE_LIB_PREFIX}/pkgconfig/openhrp3.1.pc) # --cflags
+   execute_process(COMMAND sed -i s@{prefix}/include@{prefix}/include/openhrp3/include@g \$ENV{DESTDIR}/${CATKIN_PACKAGE_LIB_PREFIX}/pkgconfig/openhrp3.1.pc) # --cflags
 ")
 
 
