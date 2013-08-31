@@ -1,6 +1,6 @@
 Index: sample/model/sample1.wrl
 ===================================================================
---- sample/model/sample1.wrl	(リビジョン 2606)
+--- sample/model/sample1.wrl	(リビジョン 2609)
 +++ sample/model/sample1.wrl	(作業コピー)
 @@ -316,7 +316,7 @@
          DEF WAIST_LINK0 Segment {
@@ -47,7 +47,12 @@ Index: sample/model/sample1.wrl
                        children [
                          Transform {
                            rotation 1 0 0 1.5708
-@@ -483,9 +483,9 @@
+@@ -480,12 +480,14 @@
+                       jointType "rotate"
+                   jointAxis 0 1 0
+                       jointId  19
++                      ulimit 1.5708
++                      llimit -3.14159
                        translation   0 0.21 0
                        children [
                          DEF LARM_LINK1 Segment {
@@ -60,7 +65,12 @@ Index: sample/model/sample1.wrl
                            children Transform {
                              translation 0 -0.05 0
                              children DEF ARM_SHAPE1 Shape {
-@@ -505,8 +505,8 @@
+@@ -502,11 +504,13 @@
+                           jointType "rotate"
+               jointAxis 1 0 0
+                           jointId  20
++                          ulimit 2.0944
++                          llimit -0.261799
                            children [
                              DEF LARM_LINK2 Segment {
                                centerOfMass  0 0 -0.1
@@ -71,7 +81,12 @@ Index: sample/model/sample1.wrl
                                children DEF ARM_SHAPE2 Transform {
                                  children [
                                    Transform {
-@@ -537,9 +537,9 @@
+@@ -534,12 +538,14 @@
+                             DEF LARM_SHOULDER_Y Joint {
+                               jointType "rotate"
+                               jointId  21
++                              ulimit 2.0944
++                              llimit -2.0944
                                translation     0 0 -0.263
                                children [
                                  DEF LARM_LINK3 Segment {
@@ -84,8 +99,12 @@ Index: sample/model/sample1.wrl
                                    children DEF ARM_SHAPE3 Transform {
                                      translation 0 0 0.05
                                      rotation 1 0 0 1.5708
-@@ -559,9 +559,9 @@
+@@ -557,11 +563,13 @@
+                                   jointType "rotate"
+                   jointAxis 0 1 0
                                    jointId  22
++                                  ulimit -0.174533
++                                  llimit -2.61799
                                    children [
                                      DEF LARM_LINK4 Segment {
 -                                      centerOfMass  0 0 -0.3
@@ -97,7 +116,12 @@ Index: sample/model/sample1.wrl
                                        children DEF ARM_SHAPE4 Transform {
                                          children [
                                            Shape {
-@@ -590,9 +590,9 @@
+@@ -587,12 +595,14 @@
+                                       jointType "rotate"
+                       jointAxis 0 0 1
+                                       jointId  23
++                                      ulimit 2.0944
++                                      llimit -2.0944
                                        translation       0 0 -0.247
                                        children [
                                          DEF LARM_LINK5 Segment {
@@ -109,8 +133,12 @@ Index: sample/model/sample1.wrl
                                            children DEF ARM_SHAPE5 Transform {
                                              translation 0 0 0.05
                                              rotation 1 0 0 1.5708
-@@ -612,9 +612,9 @@
+@@ -610,11 +620,13 @@
+                                           jointType "rotate"
+                       jointAxis 0 1 0
                                            jointId  24
++                                          ulimit 2.0944
++                                          llimit -2.0944
                                            children [
                                              DEF LARM_LINK6 Segment {
 -                                              centerOfMass  -0.1 0 0
@@ -121,7 +149,14 @@ Index: sample/model/sample1.wrl
                                                 children [
                                                    DEF lhsensor ForceSensor {
                                                          translation 0 0 0
-@@ -658,7 +658,7 @@
+@@ -653,12 +665,14 @@
+                                               jointType "rotate"
+                                               jointAxis 1 0 0
+                                               jointId  25
++                                              ulimit 0.122173
++                                              llimit -1.309
+                                               children [
+                                                 DEF LARM_LINK7 Segment {
  #                                                  centerOfMass  0 0 -0.1
                                                    centerOfMass  0 -0.03 -0.1
                                                    mass    0.4
@@ -130,7 +165,12 @@ Index: sample/model/sample1.wrl
                                                    children DEF ARM_SHAPE7 Transform {
                                                      children [
                                                        
-@@ -696,9 +696,9 @@
+@@ -693,12 +707,14 @@
+                       jointType "rotate"
+               jointAxis 0 1 0
+                       jointId 6
++                      ulimit 1.5708
++                      llimit -3.14159
                        translation   0 -0.21 0
                        children [
                          DEF RARM_LINK1 Segment {
@@ -143,7 +183,12 @@ Index: sample/model/sample1.wrl
                            children Transform {
                              translation 0 0.05 0
                              children USE ARM_SHAPE1
-@@ -712,8 +712,8 @@
+@@ -709,11 +725,13 @@
+                           jointType "rotate"
+               jointAxis 1 0 0
+                           jointId 7
++                          ulimit 0.261799
++                          llimit -2.0944
                            children [
                              DEF RARM_LINK2 Segment {
                                centerOfMass          0 0 -0.1
@@ -154,7 +199,12 @@ Index: sample/model/sample1.wrl
                                children [
                                  USE ARM_SHAPE2
                                ]
-@@ -725,9 +725,9 @@
+@@ -722,12 +740,14 @@
+                             DEF RARM_SHOULDER_Y Joint {
+                               jointType "rotate"
+                               jointId 8
++                              ulimit 2.0944
++                              llimit -2.0944
                                translation     0 0 -0.263
                                children [
                                  DEF RARM_LINK3 Segment {
@@ -167,8 +217,12 @@ Index: sample/model/sample1.wrl
                                    children USE ARM_SHAPE3
                                  }
  
-@@ -737,9 +737,9 @@
+@@ -735,11 +755,13 @@
+                                   jointType "rotate"
+                   jointAxis 0 1 0
                                    jointId 9
++                                  ulimit -0.174533
++                                  llimit -2.61799
                                    children [
                                      DEF RARM_LINK4 Segment {
 -                                      centerOfMass          0 0 -0.3
@@ -180,7 +234,12 @@ Index: sample/model/sample1.wrl
                                        children USE ARM_SHAPE4 
                                      } # Segment RARM_LINK4
  
-@@ -750,9 +750,9 @@
+@@ -747,12 +769,14 @@
+                                       jointType "rotate"
+                       jointAxis 0 0 1
+                                       jointId 10
++                                      ulimit 2.0944
++                                      llimit -2.0944
                                        translation  0 0 -0.247
                                        children [
                                          DEF RARM_LINK5 Segment {
@@ -192,8 +251,12 @@ Index: sample/model/sample1.wrl
                                            children USE ARM_SHAPE5
                                          }
                                          
-@@ -762,10 +762,9 @@
+@@ -760,12 +784,13 @@
+                                           jointType "rotate"
+                       jointAxis 0 1 0
                                            jointId 11
++                                          ulimit 2.0944
++                                          llimit -2.0944
                                            children [
                                              DEF RARM_LINK6 Segment {
 -                                              centerOfMass          -0.1 0 0                                            
@@ -205,7 +268,13 @@ Index: sample/model/sample1.wrl
                                                children [
                                                  DEF rhsensor ForceSensor {
                                                          translation 0 0 0
-@@ -808,8 +807,7 @@
+@@ -804,12 +829,13 @@
+                                               jointType "rotate"
+                                               jointAxis 1 0 0
+                                               jointId 12
++                                              ulimit 1.309
++                                              llimit -0.122173
+                                               children [
                                                  DEF RARM_LINK7 Segment {
                                                    centerOfMass  0 0.03 -0.1
                                                    mass                  0.4
@@ -215,7 +284,7 @@ Index: sample/model/sample1.wrl
                                                    children [
                                                      Transform {
                                                          translation 0 0.03 -0.075
-@@ -859,9 +857,9 @@
+@@ -859,9 +885,9 @@
            translation   0 0.09 0
            children [
              DEF LLEG_LINK1 Segment {
@@ -227,7 +296,7 @@ Index: sample/model/sample1.wrl
                children DEF LEG_SHAPE1 Transform {
                  rotation 0 0 1 1.5708
                  children Shape {
-@@ -880,9 +878,9 @@
+@@ -880,9 +906,9 @@
                jointId 14
                children    [
                     DEF LLEG_LINK2 Segment {
@@ -239,7 +308,7 @@ Index: sample/model/sample1.wrl
                       children DEF LEG_SHAPE2 Shape {
                         appearance Appearance {
                           material Material {
-@@ -898,9 +896,9 @@
+@@ -898,9 +924,9 @@
                       translation     0 0 -0.3535
                       children [
                         DEF LLEG_LINK3 Segment {
@@ -251,7 +320,7 @@ Index: sample/model/sample1.wrl
                           children DEF LEG_SHAPE3 Transform {
                             children [
                               Transform {
-@@ -933,9 +931,9 @@
+@@ -933,9 +959,9 @@
                           children [
                                     
                             DEF LLEG_LINK4 Segment {
@@ -263,7 +332,7 @@ Index: sample/model/sample1.wrl
                               children DEF LEG_SHAPE4 Transform {
                                 children [
                                   Shape {
-@@ -964,9 +962,9 @@
+@@ -964,9 +990,9 @@
                               translation       0 0 -0.3
                               children [
                                 DEF LLEG_LINK5 Segment {
@@ -275,7 +344,7 @@ Index: sample/model/sample1.wrl
                                   children DEF LEG_SHAPE5 Shape {
                                     appearance Appearance {
                                       material Material {
-@@ -981,9 +979,9 @@
+@@ -981,9 +1007,9 @@
                                   jointId 18
                                   children [
                                     DEF LLEG_LINK6 Segment {
@@ -287,7 +356,7 @@ Index: sample/model/sample1.wrl
                                       children[ 
                                         DEF lfsensor ForceSensor {
                                           translation 0 0 -0.07
-@@ -1037,9 +1035,9 @@
+@@ -1037,9 +1063,9 @@
            translation   0 -0.09 0
            children [
              DEF RLEG_LINK1 Segment {
@@ -299,7 +368,7 @@ Index: sample/model/sample1.wrl
                children USE LEG_SHAPE1
              }
  
-@@ -1049,9 +1047,9 @@
+@@ -1049,9 +1075,9 @@
                jointId 1
                children [
                  DEF RLEG_LINK2 Segment {
@@ -311,7 +380,7 @@ Index: sample/model/sample1.wrl
                    children USE LEG_SHAPE2
                  }
                  DEF RLEG_HIP_Y Joint {
-@@ -1060,9 +1058,9 @@
+@@ -1060,9 +1086,9 @@
                    translation     0 0 -0.3535
                    children [
                      DEF RLEG_LINK3 Segment {
@@ -323,7 +392,7 @@ Index: sample/model/sample1.wrl
                        children [
                          USE LEG_SHAPE3
                        ]
-@@ -1074,9 +1072,9 @@
+@@ -1074,9 +1100,9 @@
                        jointId 3
                        children [
                          DEF RLEG_LINK4 Segment {
@@ -335,7 +404,7 @@ Index: sample/model/sample1.wrl
                            children [
                              USE LEG_SHAPE4
                            ]
-@@ -1089,9 +1087,9 @@
+@@ -1089,9 +1115,9 @@
                            translation     0 0 -0.3
                            children [
                              DEF RLEG_LINK5 Segment {
@@ -347,7 +416,7 @@ Index: sample/model/sample1.wrl
                                children USE LEG_SHAPE5
                              }
  
-@@ -1101,9 +1099,9 @@
+@@ -1101,9 +1127,9 @@
                                jointId 5
                                children [
                                  DEF RLEG_LINK6 Segment {
