@@ -17,10 +17,36 @@ execute_process(
 if (_make_failed)
   message(FATAL_ERROR "Compile openhrp3 failed")
 endif(_make_failed)
+
+# binary files intentionally goes to ${CATKIN_PACKAGE_BIN_DESTINATION}/lib
 execute_process(
-  COMMAND sh -c "test -e ${CATKIN_DEVEL_PREFIX}/lib/${PROJECT_NAME}/bin || (mkdir -p ${CATKIN_DEVEL_PREFIX}/lib/${PROJECT_NAME}; mv ${CATKIN_DEVEL_PREFIX}/bin/* ${CATKIN_DEVEL_PREFIX}/lib/${PROJECT_NAME}/)"
+  COMMAND sh -c "test -e ${CATKIN_DEVEL_PREFIX}/lib/${PROJECT_NAME} || (mkdir -p ${CATKIN_DEVEL_PREFIX}/lib/${PROJECT_NAME}; mv ${CATKIN_DEVEL_PREFIX}/bin/* ${CATKIN_DEVEL_PREFIX}/lib/${PROJECT_NAME}/)"
+  RESULT_VARIABLE _make_failed
   OUTPUT_VARIABLE _copy_bin)
-message("${_copy_bin}")
+message("copy binary files ${_copy_bin}")
+if (_make_failed)
+  message(FATAL_ERROR "Copy openhrp3/bin failed: ${_make_failed}")
+endif(_make_failed)
+
+# shared files intentionally goes to ${CATKIN_PACKAGE_SHARE_DESTINATION}
+execute_process(
+  COMMAND sh -c "test -e ${CATKIN_DEVEL_PREFIX}/share/${PROJECT_NAME}/share || (mkdir -p ${CATKIN_DEVEL_PREFIX}/share/${PROJECT_NAME}/share; mv ${CATKIN_DEVEL_PREFIX}/share/OpenHRP-3.1 ${CATKIN_DEVEL_PREFIX}/share/${PROJECT_NAME}/share/)"
+  RESULT_VARIABLE _make_failed
+  OUTPUT_VARIABLE _copy_share)
+message("copy shared files ${_copy_share}")
+if (_make_failed)
+  message(FATAL_ERROR "Copy openhrp3/share failed: ${_make_failed}")
+endif(_make_failed)
+
+# fix idl file location
+execute_process(
+  COMMAND sed -i s@{prefix}/share/OpenHRP-3.1@{prefix}/share/openhrp3/share/OpenHRP-3.1@g ${CATKIN_DEVEL_PREFIX}/lib/pkgconfig/openhrp3.1.pc
+  RESULT_VARIABLE _make_failed
+  OUTPUT_VARIABLE _fix_pc)
+message("fix openhrp3.1.pc file ${_fix_pc}")
+if (_make_failed)
+  message(FATAL_ERROR "fix openhrp3.1.pc failed: ${_make_failed}")
+endif(_make_failed)
 
 
 # fake add_library for catkin_package
@@ -48,16 +74,14 @@ install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/lib/
 install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/include
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
 )
-install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/share
+install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/share/openhrp3
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
 install(CODE
-  "execute_process(COMMAND echo \"fix openhrp3.1.pc\")
-   execute_process(COMMAND sed -i s@${CATKIN_DEVEL_PREFIX}@${CMAKE_INSTALL_PREFIX}@g \$ENV{DESTDIR}/${CATKIN_PACKAGE_LIB_PREFIX}/pkgconfig/openhrp3.1.pc) # basic
-   #execute_process(COMMAND sed -i s@exec_prefix=@exec_prefix=${CMAKE_INSTALL_PREFIX}\\ \\\#@g \$ENV{DESTDIR}/${CMAKE_INSTALL_PREFIX}/lib/pkgconfig/openhrp3.1.pc) # for --libs
-   #execute_process(COMMAND sed -i s@^prefix=${CATKIN_DEVEL_PREFIX}@prefix=${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME}@g \$ENV{DESTDIR}/${CMAKE_PACKAGE_LIB_PREFIX}/pkgconfig/openhrp3.1.pc) # basic
-   execute_process(COMMAND sed -i s@{prefix}/include@{prefix}/include/openhrp3/include@g \$ENV{DESTDIR}/${CATKIN_PACKAGE_LIB_PREFIX}/pkgconfig/openhrp3.1.pc) # --cflags
+  "execute_process(COMMAND echo \"fix \$ENV{DESTDIR}/${CMAKE_INSTALL_PREFIX}/${CATKIN_PACKAGE_LIB_DESTINATION}/pkgconfig/openhrp3.1.pc\")
+   execute_process(COMMAND sed -i s@${CATKIN_DEVEL_PREFIX}@${CMAKE_INSTALL_PREFIX}@g \$ENV{DESTDIR}/${CMAKE_INSTALL_PREFIX}/${CATKIN_PACKAGE_LIB_DESTINATION}/pkgconfig/openhrp3.1.pc) # basic
+   execute_process(COMMAND sed -i s@{prefix}/include@{prefix}/include/openhrp3/include@g \$ENV{DESTDIR}/${CMAKE_INSTALL_PREFIX}/${CATKIN_PACKAGE_LIB_DESTINATION}/pkgconfig/openhrp3.1.pc) # --cflags
 ")
 
 
