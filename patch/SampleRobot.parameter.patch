@@ -103,7 +103,7 @@ Index: sample/model/sample1.wrl
                                    jointType "rotate"
                    jointAxis 0 1 0
                                    jointId  22
-+                                  ulimit -0.174533
++                                  ulimit 0.174533
 +                                  llimit -2.61799
                                    children [
                                      DEF LARM_LINK4 Segment {
@@ -221,7 +221,7 @@ Index: sample/model/sample1.wrl
                                    jointType "rotate"
                    jointAxis 0 1 0
                                    jointId 9
-+                                  ulimit -0.174533
++                                  ulimit 0.174533
 +                                  llimit -2.61799
                                    children [
                                      DEF RARM_LINK4 Segment {
