@@ -30,7 +30,7 @@ endif(_make_failed)
 
 # shared files intentionally goes to ${CATKIN_PACKAGE_SHARE_DESTINATION}
 execute_process(
-  COMMAND sh -c "test -e ${CATKIN_DEVEL_PREFIX}/share/${PROJECT_NAME}/share || (mkdir -p ${CATKIN_DEVEL_PREFIX}/share/${PROJECT_NAME}/share; mv ${CATKIN_DEVEL_PREFIX}/share/OpenHRP-3.1 ${CATKIN_DEVEL_PREFIX}/share/${PROJECT_NAME}/share/)"
+  COMMAND sh -c "test -e ${CATKIN_DEVEL_PREFIX}/share/${PROJECT_NAME}/share/OpenHRP-3.1 || (mkdir -p ${CATKIN_DEVEL_PREFIX}/share/${PROJECT_NAME}/share; mv ${CATKIN_DEVEL_PREFIX}/share/OpenHRP-3.1 ${CATKIN_DEVEL_PREFIX}/share/${PROJECT_NAME}/share/)"
   RESULT_VARIABLE _make_failed
   OUTPUT_VARIABLE _copy_share)
 message("copy shared files ${_copy_share}")
@@ -74,7 +74,7 @@ install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/lib/
 install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/include
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
 )
-install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/share/openhrp3
+install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/share/openhrp3/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
