@@ -6,6 +6,8 @@
    <p><i>OpenHRP3 (Open Architecture Human-centered Robotics Platform version 3) is an integrated software platform for robot simulations and software developments. It allows the users to inspect an original robot model and control program by dynamics simulation. In addition, OpenHRP3 provides various software components and calculation libraries that can be used for robotics related software developments</i> (<a href = "http://www.openrtp.jp/openhrp3/en/about.html">excerpts from here</a>). </p>
    <p>Note the its original development and maintainance is happening in undisclosed repository. The URLs of the development repository and the issue tracker URLs shown is a port to rtm-ros-robotics project.</p>
 
+   <p>Its development is happening at <a href = "https://openrtp.jp/svn/hrg/openhrp/">openrtp.jp/svn/hrg/openhrp</a>. The repository listed below is that of its ROS wrapper.</p>
+
    <p>Real version number, 3.1.4, is kept back until this discussion (http://code.google.com/p/rtm-ros-robotics/issues/detail?id=159) resolves. </p>
   </description>
   <maintainer email="k-okada@jsk.t.u-tokyo.ac.jp">Kei Okada</maintainer>
