@@ -38,6 +38,16 @@ if (_make_failed)
   message(FATAL_ERROR "Copy openhrp3/share failed: ${_make_failed}")
 endif(_make_failed)
 
+# copy of shared files intentionally goes to ${PROJECT_SOURCE_DIR} for hrpsys_tools/launch/_gen_project.launch
+execute_process(
+  COMMAND sh -c "test -e ${PROJECT_SOURCE_DIR}/share/OpenHRP-3.1 || (mkdir -p ${PROJECT_SOURCE_DIR}/share/OpenHRP-3.1; cp -r ${CATKIN_DEVEL_PREFIX}/share/${PROJECT_NAME}/share/OpenHRP-3.1/ ${PROJECT_SOURCE_DIR}/share/)"
+  RESULT_VARIABLE _make_failed
+  OUTPUT_VARIABLE _copy_share)
+message("copy shared files ${_copy_share}")
+if (_make_failed)
+  message(FATAL_ERROR "Copy openhrp3/share failed: ${_make_failed}")
+endif(_make_failed)
+
 # fix idl file location
 execute_process(
   COMMAND sed -i s@{prefix}/share/OpenHRP-3.1@{prefix}/share/openhrp3/share/OpenHRP-3.1@g ${CATKIN_DEVEL_PREFIX}/lib/pkgconfig/openhrp3.1.pc
