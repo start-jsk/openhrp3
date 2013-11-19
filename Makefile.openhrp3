@@ -1,7 +1,7 @@
 INSTALL_DIR ?= $(CURDIR)
 SVN_DIR     = build/OpenHRP-3.1
 #SVN_URL     = https://openrtp.org/svn/hrg/openhrp/3.1/trunk # for developers only
-SVN_URL     = http://openrtp.org/svn/hrg/openhrp/3.1/tags/3.1.5/
+SVN_URL     = https://openrtp.org/svn/hrg/openhrp/3.1/tags/3.1.5/
 #SVN_REVISION = -r@REVISION@
 SVN_PATCH = patch/OpenHRP2ModelFile.patch #
 SVN_CMDLINE = svn --non-interactive --trust-server-cert 
