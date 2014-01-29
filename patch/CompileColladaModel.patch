@@ -1,0 +1,20 @@
+Index: sample/CMakeLists.txt
+===================================================================
+--- sample/CMakeLists.txt	(リビジョン 2617)
++++ sample/CMakeLists.txt	(作業コピー)
+@@ -4,6 +4,15 @@
+   add_subdirectory(JoystickControl)
+ endif()
+ 
++add_custom_command(OUTPUT model/sample.dae
++  COMMAND ../bin/export-collada -i model/sample.wrl -o model/sample.dae
++  DEPENDS ../bin/export-collada model/sample.wrl)
++add_custom_command(OUTPUT model/PA10/pa10.dae
++  COMMAND ../bin/export-collada -i model/PA10/pa10.main.wrl -o model/PA10/pa10.dae
++  DEPENDS ../bin/export-collada model/PA10/pa10.main.wrl)
++add_custom_target(export_collada_sample_model ALL
++  DEPENDS model/sample.dae model/PA10/pa10.dae)
++
+ install(DIRECTORY model project script
+   DESTINATION ${RELATIVE_SAMPLE_INSTALL_PATH}
+   PATTERN ".svn" EXCLUDE PATTERN "mockup" EXCLUDE)
