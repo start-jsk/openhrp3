@@ -15,7 +15,7 @@
   <url>http://ros.org/wiki/openhrp3</url>
 
   <export>
-
+    <python path="${prefix}/lib/python2.7/dist-packages" />
   </export>
 
   <!-- openhrp3 -->
