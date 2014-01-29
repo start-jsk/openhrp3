@@ -2,12 +2,13 @@ Index: server/ModelLoader/BodyInfoCollada_impl.cpp
 ===================================================================
 --- server/ModelLoader/BodyInfoCollada_impl.cpp	(リビジョン 2617)
 +++ server/ModelLoader/BodyInfoCollada_impl.cpp	(作業コピー)
-@@ -792,6 +792,22 @@
+@@ -792,6 +792,23 @@
  		     plink->centerOfMass[0] = tlocalmass[3];
  		     plink->centerOfMass[1] = tlocalmass[7];
  		     plink->centerOfMass[2] = tlocalmass[11];
 +                     if( !!rigiddata->getInertia() ) {
 +                       DblArray12 temp_i, temp_a, m_inertia, m_result;
++                       for (int i = 0; i < 12; i++) { m_inertia[i] = 0.0; }
 +                       m_inertia[4*0 + 0] = plink->inertia[0];
 +                       m_inertia[4*1 + 1] = plink->inertia[4];
 +                       m_inertia[4*2 + 2] = plink->inertia[8];
