@@ -72,8 +72,8 @@ Index: hrplib/hrpCorba/CMakeLists.txt
 +  OUTPUT_STRIP_TRAILING_WHITESPACE)
  
 +
-+set(idl_py_files ${idl_py_files} ${CMAKE_CURRENT_BINARY_DIR}/OpenHRP/__init__.py)
-+install(FILES ${idl_py_files} DESTINATION lib/python${python_version}/dist-packages/OpenHRP)
++set(idl_py_files ${idl_py_files} ${CMAKE_CURRENT_BINARY_DIR}/OpenHRP3/__init__.py)
++install(FILES ${idl_py_files} DESTINATION lib/python${python_version}/dist-packages/OpenHRP3)
 +
 +
 +

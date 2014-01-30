@@ -12,7 +12,7 @@ import CosNaming
 
 import sys, os, socket
 
-from OpenHRP import *
+from OpenHRP3 import *
 #improt OpenHRP
 #import hrpsys
 #import rtm
