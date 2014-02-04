@@ -14,7 +14,7 @@ installed: $(SVN_DIR) patched
 	@echo "                 PATH=$(PATH)"
 	@echo "                 INSTALL_DIR=$(INSTALL_DIR)"
 	@echo "                 OPENRTM_DIR=$(OPENRTM_DIR)"
-	cd $(SVN_DIR) && cmake . -DCMAKE_INSTALL_PREFIX=$(INSTALL_DIR) -DENABLE_INSTALL_RPATH=ON -DENABLE_INSTALL_RPATH_TO_SELF=ON -DCOMPILE_JAVA_STUFF=OFF && make VERBOSE=1 && make install
+	cd $(SVN_DIR) && cmake . -DCMAKE_INSTALL_PREFIX=$(INSTALL_DIR) -DENABLE_INSTALL_RPATH=ON -DENABLE_INSTALL_RPATH_TO_SELF=ON -DCOMPILE_JAVA_STUFF=OFF && make VERBOSE=1 -j`grep -c processor /proc/cpuinfo` && make install
 	#
 	# add link
 	ln -sf SimulationEC.so $(INSTALL_DIR)/lib/libSimulationEC.so
