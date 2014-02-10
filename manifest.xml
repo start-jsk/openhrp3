@@ -22,6 +22,9 @@
   <depend package="openrtm_aist" />
   <depend package="openrtm_aist_python" />
 
+  <rosdep name="openrtm_aist" />
+  <rosdep name="openrtm_aist_python" />
+
   <rosdep name="eigen" />
   <rosdep name="atlas" />
   <rosdep name="f2c" />
