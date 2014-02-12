@@ -29,6 +29,10 @@
   <rosdep name="atlas" />
   <rosdep name="f2c" />
   <rosdep name="boost" />
+  <rosdep name="doxygen" />
+  <rosdep name="libjpeg" />
+  <rosdep name="libpng12-dev" />
+  <rosdep name="subversion" />
 
   <!-- collada -->
   <rosdep name="collada-dom" />
