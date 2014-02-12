@@ -19,7 +19,7 @@
   </export>
 
   <!-- openhrp3 -->
-  <depend package="openrtm_aist" />
+  <!-- depend package="openrtm_aist" / --> <!-- intentinally comment out due to build error on https://github.com/start-jsk/openhrp3/issues/3 -->
   <depend package="openrtm_aist_python" />
 
   <rosdep name="openrtm_aist" />
