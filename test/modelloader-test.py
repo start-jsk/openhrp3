@@ -15,6 +15,7 @@ import CosNaming
 
 import sys, os, socket
 
+import OpenRTM_aist
 from OpenHRP3 import *
 import hrpsys
 import rtm
