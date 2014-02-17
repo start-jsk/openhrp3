@@ -34,6 +34,8 @@
   <rosdep name="libpng12-dev" />
   <rosdep name="subversion" />
 
+  <rosdep name="rostest" />
+
   <!-- collada -->
   <rosdep name="collada-dom" />
 

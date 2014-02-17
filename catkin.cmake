@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(openhrp3)
 
 # Load catkin and all dependencies required for this package
-find_package(catkin REQUIRED COMPONENTS openrtm_aist_python)
+find_package(catkin REQUIRED COMPONENTS openrtm_aist_python rostest)
 
 # Build OpenHRP3
 set(ENV{PKG_CONFIG_PATH} $ENV{PKG_CONFIG_PATH}:${CATKIN_DEVEL_PREFIX}/lib/pkgconfig) # 1) set pkg-config path
@@ -95,3 +95,5 @@ install(CODE
 ")
 
 
+install(DIRECTORY test DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION} USE_SOURCE_PERMISSIONS)
+add_rostest(test/modelloader-test.launch)
