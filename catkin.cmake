@@ -9,7 +9,7 @@ find_package(catkin REQUIRED COMPONENTS openrtm_aist_python rostest)
 set(ENV{PKG_CONFIG_PATH} $ENV{PKG_CONFIG_PATH}:${CATKIN_DEVEL_PREFIX}/lib/pkgconfig) # 1) set pkg-config path
 find_package(PkgConfig)
 pkg_check_modules(openrtm_aist openrtm-aist REQUIRED) # 2) invoke pkg-confg
-set(ENV{PATH} $ENV{PATH}:${openrtm_aist_PREFIX}/lib/openrtm_aist/bin) # 3) get PREFIX and update PATH
+set(ENV{PATH} $ENV{PATH}:${openrtm_aist_PREFIX}/lib/openrtm_aist) # 3) get PREFIX and update PATH
 execute_process(
   COMMAND sh -c "test -e ${CATKIN_DEVEL_PREFIX}/lib/${PROJECT_NAME} || rm -f ${PROJECT_SOURCE_DIR}/installed ${PROJECT_SOURCE_DIR}/build/OpenHRP-3.1/CMakeCache.txt"
   COMMAND cmake -E chdir ${PROJECT_SOURCE_DIR} make -f Makefile.openhrp3 INSTALL_DIR=${CATKIN_DEVEL_PREFIX} installed
