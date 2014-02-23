@@ -1,15 +1,26 @@
 INSTALL_DIR ?= $(CURDIR)
+PATCH_DIR   = ${CURDIR}
 SVN_DIR     = build/OpenHRP-3.1
 #SVN_URL     = https://openrtp.org/svn/hrg/openhrp/3.1/trunk # for developers only
 SVN_URL     = https://openrtp.org/svn/hrg/openhrp/3.1/tags/3.1.5/
 #SVN_REVISION = -r@REVISION@
-SVN_PATCH = patch/OpenHRP2ModelFile.patch patch/FixInertiaColladaModelLoader.patch patch/FixColladaModelLoaderSegmentNames.patch patch/CompileColladaModel.patch patch/CompileIdlPy.patch #
+SVN_PATCH = ${PATCH_DIR}/patch/OpenHRP2ModelFile.patch ${PATCH_DIR}/patch/FixInertiaColladaModelLoader.patch ${PATCH_DIR}/patch/FixColladaModelLoaderSegmentNames.patch ${PATCH_DIR}/patch/CompileColladaModel.patch ${PATCH_DIR}/patch/CompileIdlPy.patch #
 SVN_CMDLINE = svn --non-interactive --trust-server-cert 
+MK_DIR      = $(shell rospack find mk)
 
 
-include $(CURDIR)/svn_checkout.mk
+include $(MK_DIR)/svn_checkout.mk
 
-installed: $(SVN_DIR) patched
+patched_no_makefile: $(SVN_PATCH) ## copy from svn_checkout.mk
+ifneq ($(strip $(SVN_PATCH)),)
+	svn revert -R $(SVN_DIR)
+endif
+	-cd $(SVN_DIR) && $(SVN_CMDLINE) up $(SVN_REVISION)
+	$(foreach PATCH, $(SVN_PATCH), patch -d $(SVN_DIR) -p0 < $(PATCH) && ) echo patched
+	touch rospack_nosubdirs
+	touch patched
+
+installed: $(SVN_DIR) patched_no_makefile
 	@echo "compile openhrp3 ... "
 	@echo "                 PATH=$(PATH)"
 	@echo "                 INSTALL_DIR=$(INSTALL_DIR)"
