@@ -44,19 +44,21 @@ if(NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/installed)
   endforeach()
 
   # move share directory
-  execute_process(
-    COMMAND cmake -E make_directory ${PROJECT_SOURCE_DIR}/share/OpenHRP-3.1/
-    RESULT_VARIABLE _make_failed)
-  if (_make_failed)
-    message(FATAL_ERROR "make_directory ${PROJECT_SOURCE_DIR}/share/OpenHRP-3.1/ failed: ${_make_failed}")
-  endif(_make_failed)
-  execute_process(
-    COMMAND cmake -E rename ${CATKIN_DEVEL_PREFIX}/share/OpenHRP-3.1/ ${PROJECT_SOURCE_DIR}/share/OpenHRP-3.1/
-    RESULT_VARIABLE _make_failed)
+  if(NOT EXISTS ${PROJECT_SOURCE_DIR}/share/OpenHRP-3.1/)
+    execute_process(
+      COMMAND cmake -E make_directory ${PROJECT_SOURCE_DIR}/share/OpenHRP-3.1/
+      RESULT_VARIABLE _make_failed)
+    if (_make_failed)
+      message(FATAL_ERROR "make_directory ${PROJECT_SOURCE_DIR}/share/OpenHRP-3.1/ failed: ${_make_failed}")
+    endif(_make_failed)
+    execute_process(
+      COMMAND cmake -E rename ${CATKIN_DEVEL_PREFIX}/share/OpenHRP-3.1/ ${PROJECT_SOURCE_DIR}/share/OpenHRP-3.1/
+      RESULT_VARIABLE _make_failed)
     message("move share directory ${CATKIN_DEVEL_PREFIX}/share/OpenHRP-3.1/ ${PROJECT_SOURCE_DIR}/share/OpenHRP-3.1/")
-  if (_make_failed)
-    message(FATAL_ERROR "Move share/OpenHRP-3.1 failed: ${_make_failed}")
-  endif(_make_failed)
+    if (_make_failed)
+      message(FATAL_ERROR "Move share/OpenHRP-3.1 failed: ${_make_failed}")
+    endif(_make_failed)
+  endif()
 
 endif(NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/installed)
 
