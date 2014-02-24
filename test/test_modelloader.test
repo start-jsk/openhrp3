@@ -6,5 +6,5 @@
 
   <node name="modelloader" pkg="openhrp3" type="openhrp-model-loader" />
 
-  <test test-name="modelloader_test" pkg="openhrp3" type="modelloader-test.py" />
+  <test test-name="test_modelloader" pkg="openhrp3" type="test_modelloader.py" />
 </launch>
