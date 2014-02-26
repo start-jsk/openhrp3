@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS mk rostest openrtm_aist)
 if(NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/installed)
 
   set(ENV{PATH} ${openrtm_aist_PREFIX}/lib/openrtm_aist/bin/:$ENV{PATH}) #update PATH for rtm-config
+  execute_process(COMMAND cmake -E remove -f ${CMAKE_CURRENT_BINARY_DIR}/build/OpenHRP-3.1/CMakeCache.txt)
   execute_process(
     COMMAND cmake -E chdir ${CMAKE_CURRENT_BINARY_DIR}
     make -f ${PROJECT_SOURCE_DIR}/Makefile.openhrp3
@@ -42,6 +43,16 @@ if(NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/installed)
       message(FATAL_ERROR "Move openhrp3/bin failed: ${_make_failed}")
     endif(_make_failed)
   endforeach()
+
+  # fix openhrp3.pkg
+  message("sed -i s@\${prefix}/share@${PROJECT_SOURCE_DIR}/share@g ${CATKIN_DEVEL_PREFIX}/lib/pkgconfig/openhrp3.1.pc")
+  execute_process(
+    COMMAND sed -i s@\${prefix}/share@${PROJECT_SOURCE_DIR}/share@g ${CATKIN_DEVEL_PREFIX}/lib/pkgconfig/openhrp3.1.pc
+    OUTPUT_VARIABLE _sed_output
+    RESULT_VARIABLE _sed_failed)
+  if (_sed_failed)
+    message(FATAL_ERROR "sed ${CATKIN_DEVEL_PREFIX}/lib/pkgconfig/openhrp3.1.pc failed: ${_make_failed}")
+  endif(_sed_failed)
 
   # move share directory
   if(NOT EXISTS ${PROJECT_SOURCE_DIR}/share/OpenHRP-3.1/)
