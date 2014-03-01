@@ -86,9 +86,35 @@ catkin_package(
 install(
   DIRECTORY ${CATKIN_DEVEL_PREFIX}/include/OpenHRP-3.1
   DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION})
-install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/lib/
-  DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  USE_SOURCE_PERMISSIONS)
+
+# use install_manifest.xml to copy files under devel to install, not to overwrite existing files (ex, openrtm-aist.pc with path modification) by copying entire directory
+### -> install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/lib/${PROJECT_NAME} DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}/${PROEJCT_NAME})
+execute_process(
+  COMMAND grep ${CATKIN_DEVEL_PREFIX}/bin ${CMAKE_CURRENT_BINARY_DIR}/build/OpenHRP-3.1/install_manifest.txt
+  OUTPUT_VARIABLE _bin_files RESULT_VARIABLE _grep_failed)
+if (_grep_failed)
+  message(FATAL_ERROR "grep bin ${CMAKE_CURRENT_BINARY_DIR}/build/OpenHRP-3.1/install_manifest.txt ${_make_failed}")
+endif(_grep_failed)
+execute_process(
+  COMMAND grep ${CATKIN_DEVEL_PREFIX}/lib ${CMAKE_CURRENT_BINARY_DIR}/build/OpenHRP-3.1/install_manifest.txt
+  OUTPUT_VARIABLE _lib_files RESULT_VARIABLE _grep_failed)
+if (_grep_failed)
+  message(FATAL_ERROR "grep lib ${CMAKE_CURRENT_BINARY_DIR}/build/OpenHRP-3.1/install_manifest.txt ${_make_failed}")
+endif(_grep_failed)
+
+string(REGEX REPLACE "\n" ";" _bin_files ${_bin_files})
+string(REGEX REPLACE "\n" ";" _lib_files ${_lib_files})
+foreach(_bin_file ${_bin_files})
+  get_filename_component(_bin_file_name ${_bin_file} NAME)
+  install(PROGRAMS ${CATKIN_DEVEL_PREFIX}/lib/${PROJECT_NAME}/${_bin_file_name} DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}/${PROJECT_NAME})
+endforeach()
+foreach(_lib_file ${_lib_files})
+  get_filename_component(_lib_file_path ${_lib_file} PATH)
+  string(REPLACE "${CATKIN_DEVEL_PREFIX}/lib" "" _lib_file_path ${_lib_file_path})
+  install(FILES ${_lib_file} DESTINATION ${CATKIN_GLOBAL_LIB_DESTINATION}/${_lib_file_path})
+endforeach()
+## done copy libs
+
 install(DIRECTORY test share
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
   USE_SOURCE_PERMISSIONS)
