@@ -35,6 +35,7 @@
   <rosdep name="subversion" />
 
   <rosdep name="rostest" />
+  <rosdep name="rosbuild" />
   <rosdep name="mk" />
 
   <!-- collada -->
