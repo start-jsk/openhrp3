@@ -4,14 +4,17 @@ SVN_DIR     = build/OpenHRP-3.1
 #SVN_URL     = https://openrtp.org/svn/hrg/openhrp/3.1/trunk # for developers only
 SVN_URL     = https://openrtp.org/svn/hrg/openhrp/3.1/tags/3.1.5/
 #SVN_REVISION = -r@REVISION@
-SVN_PATCH = ${PATCH_DIR}/patch/OpenHRP2ModelFile.patch ${PATCH_DIR}/patch/FixInertiaColladaModelLoader.patch ${PATCH_DIR}/patch/FixColladaModelLoaderSegmentNames.patch ${PATCH_DIR}/patch/CompileColladaModel.patch ${PATCH_DIR}/patch/CompileIdlPy.patch ${PATCH_DIR}/patch/Boost.patch #
 SVN_CMDLINE = svn --non-interactive --trust-server-cert 
+
+SVN_PATCH = ${PATCH_DIR}/patch/OpenHRP2ModelFile.patch ${PATCH_DIR}/patch/FixInertiaColladaModelLoader.patch ${PATCH_DIR}/patch/FixColladaModelLoaderSegmentNames.patch ${PATCH_DIR}/patch/CompileColladaModel.patch ${PATCH_DIR}/patch/CompileIdlPy.patch ${PATCH_DIR}/patch/Boost.patch ${PATCH_DIR}/patch/cblas.patch #
+
 # OpenHRP2ModelFile.patch : https://openrtp.jp/redmine/issues/2154
 # FixInertiaColladaModelLoader.patch : https://openrtp.jp/redmine/issues/2168
 # CompileColladaModel.patch : https://openrtp.jp/redmine/issues/2171
 # FixColladaModelLoaderSegmentNames.patch : https://openrtp.jp/redmine/issues/2169
 # CompileIdlPy.patch : https://openrtp.jp/redmine/issues/2170
 # Boost.patch cblas.patch :see https://openrtp.jp/redmine/issues/2172, https://github.com/start-jsk/openhrp3/issues/26
+
 MK_DIR      = $(shell rospack find mk)
 NUM_OF_CPUS = $(shell grep -c '^processor' /proc/cpuinfo)
 
