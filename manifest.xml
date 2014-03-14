@@ -36,6 +36,7 @@
 
   <rosdep name="rostest" />
   <rosdep name="rosbuild" />
+  <rosdep name="roslang" />
   <rosdep name="mk" />
 
   <!-- collada -->
