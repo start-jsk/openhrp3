@@ -25,3 +25,5 @@ if (_make_failed)
 endif(_make_failed)
 
 
+rosbuild_add_rostest(test/test_openhrp3.test)
+rosbuild_add_rostest(test/test_modelloader.test)
