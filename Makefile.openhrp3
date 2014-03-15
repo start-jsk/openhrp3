@@ -24,7 +24,7 @@ endif
 	-cd $(SVN_DIR) && $(SVN_CMDLINE) up $(SVN_REVISION)
 	$(foreach PATCH, $(SVN_PATCH), patch -d $(SVN_DIR) -p0 < $(PATCH) && ) echo patched
 	touch rospack_nosubdirs
-	touch patched
+	touch patched_no_makefile
 
 installed: $(SVN_DIR) patched_no_makefile
 	@echo "compile openhrp3 ... "
