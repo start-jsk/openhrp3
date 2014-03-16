@@ -58,6 +58,13 @@ class TestCompile(unittest.TestCase):
         print "`"+cmd+"`"+fname+" = "+os.path.join(check_output(cmd, shell=True).rstrip(), fname)
         self.assertTrue(os.path.exists(os.path.join(check_output(cmd, shell=True).rstrip(), fname)))
 
+    def test_sample_samplerobot(self):
+        cmd = "%s pkg-config openhrp3.1 --variable=idl_dir"%(self.PKG_CONFIG_PATH)
+        fname = "../sample/model/sample1.wrl"
+        # check if dil file exists
+        print "`"+cmd+"`"+fname+" = "+os.path.join(check_output(cmd, shell=True).rstrip(), fname)
+        self.assertTrue(os.path.exists(os.path.join(check_output(cmd, shell=True).rstrip(), fname)), "cmd = %r, fname = %r"%(cmd, fname))
+
 #unittest.main()
 if __name__ == '__main__':
     import rostest
