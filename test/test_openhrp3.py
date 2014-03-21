@@ -57,6 +57,11 @@ class TestCompile(unittest.TestCase):
         self.check_if_file_exists_from_rospack("share/OpenHRP-3.1/sample/project")
         # self.check_if_file_exites_from_prefix("share/openhrp3/share/OpenHRP-3.1/sample/project")
 
+        # https://code.google.com/p/hrpsys-base/source/browse/trunk/idl/CMakeLists.txt#118
+        self.check_if_file_exists("idl_dir",            "OpenHRP/OpenHRPCommon.idl")
+        # https://code.google.com/p/hrpsys-base/source/browse/trunk/sample/PA10/PA10.conf.in#1
+        self.check_if_file_exists_from_rospack("share/OpenHRP-3.1/sample/model/PA10/pa10.main.wrl")
+
     def test_files_for_hrpsys_ros_bridge(self):
         # https://github.com/start-jsk/rtmros_common/blob/master/hrpsys_ros_bridge/test/test-samplerobot.py#L63
         self.check_if_file_exists_from_rospack("share/OpenHRP-3.1/sample/controller/SampleController/etc/Sample.pos")
