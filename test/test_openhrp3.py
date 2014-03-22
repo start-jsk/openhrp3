@@ -91,21 +91,26 @@ class TestCompile(unittest.TestCase):
     def test_idl_dir(self):
         cmd = "%s pkg-config openhrp3.1 --variable=idl_dir"%(self.PKG_CONFIG_PATH)
         fname = "OpenHRP/OpenHRPCommon.idl"
-        # check if dil file exists
+        # check if idl file exists
         print "`"+cmd+"`"+fname+" = "+os.path.join(check_output(cmd, shell=True).rstrip(), fname)
         self.assertTrue(os.path.exists(os.path.join(check_output(cmd, shell=True).rstrip(), fname)))
 
     def test_sample_pa10(self):
         cmd = "%s pkg-config openhrp3.1 --variable=idl_dir"%(self.PKG_CONFIG_PATH)
         fname = "../sample/model/PA10/pa10.main.wrl"
-        # check if dil file exists
+        # check if model file exists
         print "`"+cmd+"`"+fname+" = "+os.path.join(check_output(cmd, shell=True).rstrip(), fname)
         self.assertTrue(os.path.exists(os.path.join(check_output(cmd, shell=True).rstrip(), fname)))
 
     def test_sample_samplerobot(self):
         cmd = "%s pkg-config openhrp3.1 --variable=idl_dir"%(self.PKG_CONFIG_PATH)
         fname = "../sample/model/sample1.wrl"
-        # check if dil file exists
+        # check if model file exists
+        print "`"+cmd+"`"+fname+" = "+os.path.join(check_output(cmd, shell=True).rstrip(), fname)
+        self.assertTrue(os.path.exists(os.path.join(check_output(cmd, shell=True).rstrip(), fname)), "cmd = %r, fname = %r"%(cmd, fname))
+        #
+        # check if walk data file exists
+        fname = "../sample/controller/SampleController/etc/Sample.pos"
         print "`"+cmd+"`"+fname+" = "+os.path.join(check_output(cmd, shell=True).rstrip(), fname)
         self.assertTrue(os.path.exists(os.path.join(check_output(cmd, shell=True).rstrip(), fname)), "cmd = %r, fname = %r"%(cmd, fname))
 
