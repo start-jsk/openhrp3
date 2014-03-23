@@ -1,0 +1,44 @@
+--- sample/script/autoplay.py	2014-03-21 19:24:57.000000000 -0600
++++ sample/script/autoplay.py	2014-03-21 19:48:14.692117481 -0600
+@@ -15,7 +15,7 @@
+ 
+ 	c = 0
+ 	while 1:
+-		syncExec.exec(MyRunnable())
++		syncExec.Exec(MyRunnable())
+     		c = c + 100
+ 		if c > n:
+ 			c = 0
+--- sample/script/simTest.py	2014-03-21 20:18:15.066587735 -0600
++++ sample/script/simTest.py	2014-03-21 20:18:02.938604793 -0600
+@@ -14,9 +14,9 @@
+ 		return None
+ 
+ sim   = uimanager.getSelectedItem(GrxSimulationItem, None)
+-syncExec.exec(SetTime())
++syncExec.Exec(SetTime())
+ 
+ for i in range(3):
+-	syncExec.exec(StartSim())
++	syncExec.Exec(StartSim())
+ 	sim.waitStopSimulation()
+ 
+--- sample/script/syncExec.py	2014-03-21 19:24:57.000000000 -0600
++++ sample/script/syncExec.py	2014-03-21 19:47:52.517149022 -0600
+@@ -1,6 +1,6 @@
+ import org.eclipse.swt.widgets.Display as Display
+ 
+-def exec(r):
++def Exec(r):
+ 	display = Display.getDefault()	
+ 	display.syncExec(r)
+ 	return None
+--- sample/script/testsyncexec.py	2014-03-21 19:24:57.000000000 -0600
++++ sample/script/testsyncexec.py	2014-03-21 19:48:35.844087063 -0600
+@@ -6,5 +6,5 @@
+ 		print "a"
+ 		return None
+ 
+-syncExec.exec(MyRunnable())
++syncExec.Exec(MyRunnable())
+ 
