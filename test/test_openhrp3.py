@@ -28,6 +28,50 @@ class TestCompile(unittest.TestCase):
         if os.path.exists(os.path.join(openhrp3_path, "bin")) :
             self.PKG_CONFIG_PATH='PKG_CONFIG_PATH=%s/lib/pkgconfig:$PKG_CONFIG_PATH'%(openhrp3_path)
 
+    def pkg_config_variable(self, var):
+        return check_output("%s pkg-config openhrp3.1 --variable=%s"%(self.PKG_CONFIG_PATH, var), shell=True).rstrip()
+
+    def check_if_file_exists(self, var, fname):
+        pkg_var = var
+        pkg_dname = self.pkg_config_variable(pkg_var)
+        pkg_path = os.path.join(pkg_dname, fname)
+        pkg_ret = os.path.exists(pkg_path)
+        self.assertTrue(pkg_ret, "pkg-config openhrp3.1 --variable=%s`/%s (%s) returns %r"%(pkg_var, fname, pkg_path, pkg_ret))
+
+    def test_config_variables(self):
+        # self.check_if_file_exists("prefix",             "") # not defined
+        # self.check_if_file_exists("exec_prefix",        "") # not defined
+        self.check_if_file_exists("idl_dir",            "OpenHRP/OpenHRPCommon.idl")
+
+    def check_if_file_exists_from_rospack(self, fname):
+        pkg_dname = check_output(['rospack','find','openhrp3']).rstrip()
+        pkg_path = os.path.join(pkg_dname, fname)
+        pkg_ret = os.path.exists(pkg_path)
+        self.assertTrue(pkg_ret, "`rospack find openhrp3`(%s) returns %r"%(pkg_path, pkg_ret))
+
+    def check_if_file_exites_from_prefix(self, fname):
+        self.check_if_file_exists("prefix", fname)
+
+    def test_files_for_hrpsys(self):
+        # https://github.com/start-jsk/hrpsys/blob/master/catkin.cmake#L125
+        self.check_if_file_exists_from_rospack("share/OpenHRP-3.1/sample/project")
+        # self.check_if_file_exites_from_prefix("share/openhrp3/share/OpenHRP-3.1/sample/project")
+
+        # https://code.google.com/p/hrpsys-base/source/browse/trunk/idl/CMakeLists.txt#118
+        self.check_if_file_exists("idl_dir",            "OpenHRP/OpenHRPCommon.idl")
+        # https://code.google.com/p/hrpsys-base/source/browse/trunk/sample/PA10/PA10.conf.in#1
+        self.check_if_file_exists_from_rospack("share/OpenHRP-3.1/sample/model/PA10/pa10.main.wrl")
+
+    def test_files_for_hrpsys_ros_bridge(self):
+        # https://github.com/start-jsk/rtmros_common/blob/master/hrpsys_ros_bridge/test/test-samplerobot.py#L63
+        self.check_if_file_exists_from_rospack("share/OpenHRP-3.1/sample/controller/SampleController/etc/Sample.pos")
+
+        # https://github.com/start-jsk/rtmros_common/blob/master/hrpsys_ros_bridge/catkin.cmake#L141
+        self.check_if_file_exists("idl_dir",            "../sample/model/PA10/pa10.main.wrl")
+        self.check_if_file_exists("idl_dir",            "../sample/model/sample1.wrl")
+        self.check_if_file_exists_from_rospack("share/OpenHRP-3.1/sample/model/PA10/pa10.main.wrl")
+        self.check_if_file_exists_from_rospack("share/OpenHRP-3.1/sample/model/sample1.wrl")
+
     ## test 1 == 1
     def test_compile_pkg_config(self):
         global PID
