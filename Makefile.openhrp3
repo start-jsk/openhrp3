@@ -6,7 +6,7 @@ SVN_URL     = https://openrtp.org/svn/hrg/openhrp/3.1/tags/3.1.5/
 #SVN_REVISION = -r@REVISION@
 SVN_CMDLINE = svn --non-interactive --trust-server-cert 
 
-SVN_PATCH = ${PATCH_DIR}/patch/OpenHRP2ModelFile.patch ${PATCH_DIR}/patch/FixInertiaColladaModelLoader.patch ${PATCH_DIR}/patch/FixColladaModelLoaderSegmentNames.patch ${PATCH_DIR}/patch/CompileColladaModel.patch ${PATCH_DIR}/patch/CompileIdlPy.patch ${PATCH_DIR}/patch/Boost.patch ${PATCH_DIR}/patch/cblas.patch #
+SVN_PATCH = ${PATCH_DIR}/patch/OpenHRP2ModelFile.patch ${PATCH_DIR}/patch/FixInertiaColladaModelLoader.patch ${PATCH_DIR}/patch/FixColladaModelLoaderSegmentNames.patch ${PATCH_DIR}/patch/CompileColladaModel.patch ${PATCH_DIR}/patch/CompileIdlPy.patch ${PATCH_DIR}/patch/Boost.patch ${PATCH_DIR}/patch/cblas.patch ${PATCH_DIR}/patch/Optional-lsb-release.patch ${PATCH_DIR}/patch/FixPythonExec.patch #
 
 # OpenHRP2ModelFile.patch : https://openrtp.jp/redmine/issues/2154
 # FixInertiaColladaModelLoader.patch : https://openrtp.jp/redmine/issues/2168
