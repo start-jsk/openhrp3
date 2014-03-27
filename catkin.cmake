@@ -111,7 +111,7 @@ endforeach()
 foreach(_lib_file ${_lib_files})
   get_filename_component(_lib_file_path ${_lib_file} PATH)
   string(REPLACE "${CATKIN_DEVEL_PREFIX}/lib" "" _lib_file_path ${_lib_file_path})
-  install(FILES ${_lib_file} DESTINATION ${CATKIN_GLOBAL_LIB_DESTINATION}/${_lib_file_path})
+  install(PROGRAMS ${_lib_file} DESTINATION ${CATKIN_GLOBAL_LIB_DESTINATION}/${_lib_file_path})
 endforeach()
 ## done copy libs
 
