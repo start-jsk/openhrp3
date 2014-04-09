@@ -9,6 +9,9 @@ find_package(catkin REQUIRED COMPONENTS mk rostest openrtm_aist)
 # <devel>/lib/<package>/bin/openrhrp-*
 # <devel>/lib/libhrp...
 # <src>/<package>/share
+if(NOT openhrp3_FOUND)
+  file(REMOVE ${CMAKE_CURRENT_BINARY_DIR}/installed)
+endif()
 if(NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/installed)
 
   set(ENV{PATH} ${openrtm_aist_PREFIX}/lib/openrtm_aist/bin/:$ENV{PATH}) #update PATH for rtm-config
