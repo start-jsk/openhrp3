@@ -6,7 +6,7 @@ SVN_URL     = https://openrtp.org/svn/hrg/openhrp/3.1/tags/3.1.6/
 #SVN_REVISION = -r@REVISION@
 SVN_CMDLINE = svn --non-interactive --trust-server-cert 
 
-SVN_PATCH = ${PATCH_DIR}/patch/OpenHRP2ModelFile.patch ${PATCH_DIR}/patch/CompileColladaModel.patch ${PATCH_DIR}/patch/CompileIdlPy.patch ${PATCH_DIR}/patch/Boost.patch ${PATCH_DIR}/patch/cblas.patch ${PATCH_DIR}/patch/Optional-lsb-release.patch ${PATCH_DIR}/patch/FixPythonExec.patch #
+SVN_PATCH = ${PATCH_DIR}/patch/OpenHRP2ModelFile.patch ${PATCH_DIR}/patch/CompileColladaModel.patch ${PATCH_DIR}/patch/CompileIdlPy.patch ${PATCH_DIR}/patch/Boost.patch ${PATCH_DIR}/patch/cblas.patch ${PATCH_DIR}/patch/Optional-lsb-release.patch ${PATCH_DIR}/patch/FixPythonExec.patch ${PATCH_DIR}/patch/AddOpenHRP3SampleModel.patch #
 
 # OpenHRP2ModelFile.patch : https://openrtp.jp/redmine/issues/2154
 # CompileColladaModel.patch : https://openrtp.jp/redmine/issues/2171
@@ -21,6 +21,7 @@ include $(MK_DIR)/svn_checkout.mk
 patched_no_makefile: $(SVN_PATCH) ## copy from svn_checkout.mk
 ifneq ($(strip $(SVN_PATCH)),)
 	svn revert -R $(SVN_DIR)
+	svn status $(SVN_DIR) | grep ^? | awk '{print $2}' | xargs rm -rf
 endif
 	-cd $(SVN_DIR) && $(SVN_CMDLINE) up $(SVN_REVISION)
 	$(foreach PATCH, $(SVN_PATCH), patch -d $(SVN_DIR) -p0 < $(PATCH) && ) echo patched

@@ -133,5 +133,8 @@ class TestModelLoader(unittest.TestCase):
     def test_pa10(self):
         self.checkModels("PA10/pa10.main.wrl","PA10/pa10.dae")
 
+    def test_3dof_arm(self):
+        self.checkModels("sample3dof.wrl","sample3dof.dae")
+
 if __name__ == '__main__':
     rostest.run(PKG, NAME, TestModelLoader, sys.argv)
