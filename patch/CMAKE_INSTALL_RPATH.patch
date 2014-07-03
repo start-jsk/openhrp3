@@ -1,0 +1,13 @@
+Index: CMakeLists.txt
+===================================================================
+--- CMakeLists.txt	(リビジョン 2634)
++++ CMakeLists.txt	(作業コピー)
+@@ -56,7 +56,7 @@
+     SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+   endif()
+   if(ENABLE_INSTALL_RPATH_TO_SELF)
+-    SET(CMAKE_INSTALL_RPATH "$ORIGIN/../lib")
++    SET(CMAKE_INSTALL_RPATH "$ORIGIN/../lib:$ORIGIN/..") # fix for ROS FHS
+   endif()
+ endif()
+ 
